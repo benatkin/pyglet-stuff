@@ -37,8 +37,6 @@ class GoldStar:
       gl.glVertex3f(0.4 * math.cos(a + tenth), 0.4 * math.sin(a + tenth), -0.1)
     gl.glEnd()
     gl.glLoadIdentity()
-    
-    self.angle = (self.angle + self.step) % 360.0
 
 class GoldStarWindow(pyglet.window.Window):
   def __init__(self):
@@ -47,7 +45,8 @@ class GoldStarWindow(pyglet.window.Window):
     self.gold_star = GoldStar(self)
     
     def update(dt):
-        pass
+      self.gold_star.angle = (self.gold_star.angle + self.gold_star.step) % 360.0
+      
     pyglet.clock.schedule_interval(update, 1/60.0)
   
   def on_draw(self):
