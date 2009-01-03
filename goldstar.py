@@ -9,6 +9,12 @@ class GoldStar:
     self.step = -10.0
     self.x = self.window.get_size()[0] / 2.0
     self.y = self.window.get_size()[1] / 2.0
+    
+    self.label = pyglet.text.Label("You're a star!",
+      font_name='Times New Roman',
+      font_size=1.0,
+      x=self.x, y=self.y,
+      anchor_x='center', anchor_y='center')
   
   def draw(self):
     gl.glLoadIdentity()
@@ -36,8 +42,14 @@ class GoldStar:
       gl.glVertex3f(math.cos(a), math.sin(a), -0.1)
       gl.glVertex3f(0.4 * math.cos(a + tenth), 0.4 * math.sin(a + tenth), -0.1)
     gl.glEnd()
+    gl.glTranslatef(0.0, 0.0, 0.11)
+    gl.glColor3f(1.0, 1.0, 1.0)
+    self.label.x = self.x
+    self.label.y = self.y
+    self.label.draw()
     gl.glLoadIdentity()
     
+  def advance(self):
     self.angle = (self.angle + self.step) % 360.0
 
 class GoldStarWindow(pyglet.window.Window):
@@ -47,8 +59,8 @@ class GoldStarWindow(pyglet.window.Window):
     self.gold_star = GoldStar(self)
     
     def update(dt):
-        pass
-    pyglet.clock.schedule_interval(update, 1/60.0)
+        self.gold_star.advance()
+    pyglet.clock.schedule_interval(update, 1/30.0)
   
   def on_draw(self):
     self.clear()
