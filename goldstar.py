@@ -1,5 +1,7 @@
+import sys
 import pyglet
 from pyglet import gl
+from pyglet.window import key
 import math
 
 class GoldStar:
@@ -59,9 +61,13 @@ class GoldStarWindow(pyglet.window.Window):
     self.gold_star = GoldStar(self)
     
     def update(dt):
-        self.gold_star.advance()
+      self.gold_star.advance()
     pyglet.clock.schedule_interval(update, 1/30.0)
   
+  def on_key_press(self, symbol, modifiers):
+    if(symbol == key.Q):
+      sys.exit()
+
   def on_draw(self):
     self.clear()
     self.gold_star.draw()
